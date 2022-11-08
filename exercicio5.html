@@ -1,0 +1,62 @@
+Biana é uma pessoa muito indecisa
+e precisa juntar dinheiro para conseguir em suas férias viajar
+ela terá algumas opções a escolher com seus respectivos valores
+
+Disney = R$ 15000
+Madrid = R$ 12000
+Maceió = R$ 8000
+Ribeirão preto = R$ 5000
+
+Faça um programa que solicite o nome do usuário
+o valor que o usuário tem para a viagem
+a viagem que o usuário deseja e mostre no final do programa
+se o usuário pode viajar ou se ele não pode.
+Se ele não poder viajar, mostre o quanto falta para o mesmo economizar.
+
+<script>
+let nome = prompt("Digite o nome")
+
+let valor = Number(prompt(`
+    Olá ${nome}
+    Digite o valor que você tem para a viagem
+`))
+
+let opcaoViagem = parseInt(prompt(`
+    Escolha um dos destinos abaixo:
+    1) Disney
+    2) Madrid
+    3) Maceió
+    4) Ribeirão preto
+`))
+
+let valorViagem = 0
+
+switch(opcaoViagem) {
+  case 1:
+    valorViagem = 15000
+    break;
+  case 2:
+    valorViagem = 12000
+    break;
+  case 3:
+    valorViagem = 8000
+    break;
+  case 4:
+    valorViagem = 5000
+    break;
+}
+
+if(valorViagem < 1){
+  alert("Valor da viagem inválido")
+}
+
+let valorSobraCliente = valor - valorViagem 
+if(valorSobraCliente < 0){
+  valorSobraCliente =  valorSobraCliente * -1
+  alert(`Infelizmente você não tem saldo suficiente para fazer a viagem: falta ${ valorSobraCliente.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }`)
+}
+else{
+  alert(`Parabéns ${nome}, você irá conseguir fazer a viagem e o seu troco é de: ${ valorSobraCliente.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) }`)
+}
+
+</script>
