@@ -1,0 +1,130 @@
+<script>
+/*
+
+Francisco precisa de um sistema para gerenciar sua escola
+Neste sistema precisamos capturar o aluno com as seguintes informaçoes
+
+aluno
+    - nome
+    - matricula
+    - notas
+
+as notas podem ser quantas o sistema quiser, ou seja deixe o usuário escolher a quantidade de notas
+
+neste sistema você irá precisar de um menu onde irá fazer o:
+Cadastro de alunos, digitando nome e matricula e notas
+vai precisar de um relatório, onde irá mostrar a lista dos alunos
+com nome, matricula, notas, média, aprovado/reprovado/recuperação
+Critério:
+ se a nota for >= 7 aprovado
+ se a nota for entre 5 e menor que 7 - Recuperação
+ se a nota for menor que 5 -  Reprovado
+*/
+class Aluno {
+  constructor() {
+    this.nome = "";
+    this.matricula = "";
+    this.notas = [];
+  }
+
+  somaDasNotas(){
+    let soma = 0;
+    for(let i=0; i<this.notas.length; i++){
+        soma += this.notas[i]
+    }
+
+    return soma
+  }
+
+  media(){
+    return this.somaDasNotas() / this.notas.length
+  }
+
+  situacao(){
+    const mediaCalculada = this.media()
+    if (mediaCalculada >= 7) return "Aprovado"
+    if (mediaCalculada >= 5 && mediaCalculada < 7) return "Recuperação"
+    return "Reprovado"
+  }
+}
+
+const appNotas = {}
+
+appNotas.alunos = []
+
+appNotas.mostrarAlunos = () => {
+    let msg = ""
+    for (let i=0; i<appNotas.alunos.length;i++) {
+        let aluno = appNotas.alunos[i]
+        msg += `
+            ${appNotas.mostrarAluno(aluno)}
+            --------------------------------
+        `
+    }
+
+    alert(msg)
+}
+
+appNotas.mostrarAluno = (aluno) => {
+    return `
+        Aluno: ${aluno.nome}
+        Matrícula: ${aluno.matricula}
+        Quantidade de Notas: ${aluno.notas.join(", ")}
+        Média Final: ${aluno.media()}
+        Situação: ${aluno.situacao()}
+    `
+}
+
+appNotas.cadastroAluno = () => {
+    const aluno = new Aluno()
+
+    aluno.nome = prompt("Qual o nome do aluno?")
+    aluno.matricula = prompt("Digite o número da matrícula:")
+    aluno.notas = []
+
+    let qtdNotas = Number(prompt("Quantas notas o aluno teve?"))
+    let soma = 0
+    for (let i=0; i < qtdNotas; i++) {
+        let nota = Number(prompt(`Digite o valor da nota ${i+1}:`))
+        aluno.notas.push(nota)
+        soma += nota
+    }
+
+    const confirmacao = confirm(`
+        Salvar estas informações?
+        ${appNotas.mostrarAluno(aluno)}
+    `)
+
+    if (confirmacao) {
+        appNotas.alunos.push(aluno)
+    }
+}
+
+appNotas.menu = () => {
+    let opcao = prompt(
+        "Cadastrar novo(a) aluno(a)\n\n" +
+        "Escolha uma opção:\n" +
+        "1. Cadastrar\n" +
+        "2. Exibir alunos\n" +
+        "3. Sair"
+    )
+
+    switch (opcao) {
+        case "1":
+            appNotas.cadastroAluno()
+            break
+        case "2":
+            appNotas.mostrarAlunos();
+            break
+        case "3":
+            return
+        default:
+            alert("Opção inválida!")
+    }
+
+    appNotas.menu()
+}
+
+</script>
+<h1>Bem vindo ao programa de alunos</h1>
+<button onclick="appNotas.menu()">Iniciar programa</button>
